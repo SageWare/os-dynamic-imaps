@@ -1,0 +1,116 @@
+<html>
+
+<script>
+  /**
+ *
+ * Image-Map v1.0.8 (https://www.travismclarke.com)
+ * Copyright 2018 Travis Clarke
+ * License: Apache-2.0
+ *
+ * @preserve
+ */
+;(function (root, factory) {
+    if ((!(window && window.document) && !(root && root.document))) {
+        throw new Error("ImageMap requires a window with a document");
+    }
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+        // CommonJS
+        module.exports = factory(require('jquery'));
+    } else {
+        // Browser globals
+        root.ImageMap = factory(root.jQuery);
+    }
+}(this || window, function ($) {
+    'use strict';
+    var ImageMap = function (selector) {
+        var self = this;
+        if (!self) { return new ImageMap(selector); }
+        self.selector = selector instanceof Array ? selector : [].slice.call(document.querySelectorAll(selector));
+        (self.update = function () {
+            self.selector.forEach(function (val) {
+                var img = val,
+                    newImg = document.createElement('img');
+                if (typeof img.getAttribute('usemap') === 'undefined') { return; }
+                newImg.addEventListener('load', function () {
+                    var clone = new Image();
+                    clone.src = img.getAttribute('src');
+                    var w = img.getAttribute('width') || clone.width,
+                        h = img.getAttribute('height') || clone.height,
+                        wPercent = img.offsetWidth / 100,
+                        hPercent = img.offsetHeight / 100,
+                        map = img.getAttribute('usemap').replace('#', ''),
+                        c = 'coords';
+                    [].forEach.call(document.querySelectorAll('map[name="' + map + '"] area'), function (val) {
+                        var area = val,
+                            coordsS = area.dataset[c] = area.dataset[c] || area.getAttribute(c),
+                            coordsA = coordsS.split(','),
+                            coordsPercent = Array.apply(null, Array(coordsA.length));
+                        coordsPercent.forEach(function (val, i) {
+                            coordsPercent[i] = i % 2 === 0 ? Number(((coordsA[i] / w) * 100) * wPercent) : Number(((coordsA[i] / h) * 100) * hPercent);
+                        });
+                        area.setAttribute(c, coordsPercent.toString());
+                    });
+                });
+                newImg.setAttribute('src', img.getAttribute('src'));
+            });
+        })();
+        window.addEventListener('resize', self.update);
+        return self;
+    };
+    if ($ && $.fn) {
+        $.fn.imageMap = function () {
+            var self = this;
+            return new ImageMap(self.toArray());
+        };
+    }
+    
+    ImageMap.ImageMap = ImageMap;
+    
+    return ImageMap;
+}));
+  </script>
+
+
+<img usemap="#image-map2019" align="middle" style="width:100%;" src="https://i.ibb.co/s3pFXy5/2019-Collection-Color-Swatches.png" usemap="#image-map">
+<hr> 
+<img usemap="#image-map2018" align="middle" style="width:100%;" src="https://i.ibb.co/fC1jd6Z/2018-Collection-Color-Swatches.png" usemap="#image-map">
+<hr> 
+<img usemap="#image-map2017" align="middle" style="width:100%;" src="https://i.ibb.co/7SpHbJK/2017-Collection-Color-Swatches.png" usemap="#image-map">
+
+
+<script>
+  ImageMap('img[usemap]')
+  </script>
+
+
+<map name="image-map2019">
+  <area target="_blank" alt="October Sage 2019 Collection" title="October Sage 2019 Collection" href="https://octobersage.com/collections/1743723-2019-collection " coords="1657,30,2519,300" shape="rect">
+    <area target="_blank" alt="Navy" title="Navy" href="https://octobersage.com/search?search-submit=&amp;q=navy " coords="44,32,305,291" shape="rect">
+    <area target="_blank" alt="Merlot" title="Merlot" href="https://octobersage.com/search?search-submit=&amp;q=merlot " coords="361,30,627,291" shape="rect">
+    <area target="_blank" alt="Goldenrod" title="Goldenrod" href="https://octobersage.com/search?search-submit=&amp;q=goldenrod " coords="683,30,947,291" shape="rect">
+    <area target="_blank" alt="Mocha" title="Mocha" href="https://octobersage.com/search?search-submit=&amp;q=mocha " coords="1003,30,1269,289" shape="rect">
+    <area target="_blank" alt="Caffè" title="Caffè" href="https://octobersage.com/search?search-submit=&amp;q=caffè " coords="1325,32,1591,289" shape="rect">
+</map>
+
+<map name="image-map2018">
+  <area target="_blank" alt="October Sage 2018 Collection" title="October Sage 2018 Collection" href="https://octobersage.com/collections/1743726-2018-collection " coords="1657,30,2519,300" shape="rect">
+    <area target="_blank" alt="Brown" title="Brown" href="https://octobersage.com/search?search-submit=&amp;q=brown " coords="44,32,305,291" shape="rect">
+    <area target="_blank" alt="Cream" title="Cream" href="https://octobersage.com/search?search-submit=&amp;q=cream" coords="361,30,627,291" shape="rect">
+    <area target="_blank" alt="Gray" title="Gray" href="https://octobersage.com/search?search-submit=&amp;q=gray" coords="683,30,947,291" shape="rect">
+    <area target="_blank" alt="Ruby" title="Ruby" href="https://octobersage.com/search?search-submit=&amp;q=ruby" coords="1003,30,1269,289" shape="rect">
+    <area target="_blank" alt="Off White" title="Off White" href="https://octobersage.com/search?search-submit=&amp;q=off+white" coords="1325,32,1591,289" shape="rect">
+</map>
+
+<map name="image-map2017">
+  <area target="_blank" alt="October Sage 2017 Collection" title="October Sage 2017 Collection" href="https://octobersage.com/collections/1743735-2017-collection " coords="1657,30,2519,300" shape="rect">
+    <area target="_blank" alt="Apple" title="Apple" href="https://octobersage.com/search?search-submit=&amp;q=apple " coords="44,32,305,291" shape="rect">
+    <area target="_blank" alt="Sunrise" title="Sunrise" href="https://octobersage.com/search?search-submit=&amp;q=sunrise" coords="361,30,627,291" shape="rect">
+    <area target="_blank" alt="Cadet" title="Cadet" href="https://octobersage.com/search?search-submit=&amp;q=cadet " coords="683,30,947,291" shape="rect">
+    <area target="_blank" alt="Gauntlet" title="Gauntlet" href="https://octobersage.com/search?search-submit=&amp;q=gauntlet " coords="1003,30,1269,289" shape="rect">
+    <area target="_blank" alt="Jam" title="Jam" href="https://octobersage.com/search?search-submit=&amp;q=jam " coords="1325,32,1591,289" shape="rect">
+</map>
+
+</html>
